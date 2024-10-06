@@ -13,20 +13,21 @@ class RiveScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'The Flutter Way',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFEEF1F8),
-        primarySwatch: Colors.blue,
-        fontFamily: "Intel",
-        inputDecorationTheme: const InputDecorationTheme(
-          filled: true,
-          fillColor: Colors.white,
-          errorStyle: TextStyle(height: 0),
-          border: defaultInputBorder,
-          enabledBorder: defaultInputBorder,
-          focusedBorder: defaultInputBorder,
-          errorBorder: defaultInputBorder,
-        ),
-      ),
+          // scaffoldBackgroundColor: const Color(0xFFEEF1F8),
+          // primarySwatch: Colors.blue,
+          // fontFamily: "Inter",
+          // inputDecorationTheme: const InputDecorationTheme(
+          //   filled: true,
+          //   fillColor: Colors.white,
+          //   errorStyle: TextStyle(height: 0),
+          //   border: defaultInputBorder,
+          //   enabledBorder: defaultInputBorder,
+          //   focusedBorder: defaultInputBorder,
+          //   errorBorder: defaultInputBorder,
+          // ),
+          ),
       home: const OnboardingScreen(),
     );
   }
