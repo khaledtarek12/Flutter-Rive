@@ -1,6 +1,6 @@
 {
-    "name": "rive",
-    "short_name": "rive",
+    "name": "rive_ui",
+    "short_name": "rive_ui",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

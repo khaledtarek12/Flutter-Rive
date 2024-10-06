@@ -1,4 +1,4 @@
-# rive
+# rive_ui
 
 A new Flutter project.
 
