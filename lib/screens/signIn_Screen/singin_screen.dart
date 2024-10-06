@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:rive_ui/samples/Rive_ui/theme.dart';
 
 class SinginScreen extends StatefulWidget {
-  const SinginScreen({super.key});
+  const SinginScreen({super.key, required this.onPressed});
+
+  final Function onPressed;
 
   @override
   State<SinginScreen> createState() => _SinginScreenState();
@@ -13,6 +15,7 @@ class _SinginScreenState extends State<SinginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
           child: Center(
         child: SingleChildScrollView(
@@ -118,6 +121,7 @@ class _SinginScreenState extends State<SinginScreen> {
                             bottomLeft: Radius.circular(20),
                             bottomRight: Radius.circular(20),
                           ),
+                          onPressed: () {},
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -132,7 +136,6 @@ class _SinginScreenState extends State<SinginScreen> {
                               ),
                             ],
                           ),
-                          onPressed: () {},
                         ),
                       ),
                       Padding(
@@ -207,7 +210,9 @@ class _SinginScreenState extends State<SinginScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.onPressed();
+                    },
                   ),
                 ),
               )

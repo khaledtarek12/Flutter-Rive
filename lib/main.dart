@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rive_ui/screens/onboding_Screen/onboding_screen.dart';
-import 'package:rive_ui/screens/signIn_Screen/singin_screen.dart';
 
 void main() {
   runApp(const RiveScreens());
@@ -29,7 +28,7 @@ class RiveScreens extends StatelessWidget {
         //   errorBorder: defaultInputBorder,
         // ),
       ),
-      home: const SinginScreen(),
+      home: const OnboardingScreen(),
     );
   }
 }
