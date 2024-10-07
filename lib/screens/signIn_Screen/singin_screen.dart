@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart' as rive;
+import 'package:rive_ui/samples/Rive_ui/assets.dart';
 import 'package:rive_ui/samples/Rive_ui/theme.dart';
 
 class SinginScreen extends StatefulWidget {
@@ -11,7 +13,69 @@ class SinginScreen extends StatefulWidget {
   State<SinginScreen> createState() => _SinginScreenState();
 }
 
+bool isLoading = false;
+final emilController = TextEditingController();
+final passwordController = TextEditingController();
+late rive.SMITrigger successAnimation;
+late rive.SMITrigger errorAnimation;
+late rive.SMITrigger confittAnimation;
+
 class _SinginScreenState extends State<SinginScreen> {
+  @override
+  void dispose() {
+    emilController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void onCheckRiveInit(rive.Artboard artboard) {
+    final controller =
+        rive.StateMachineController.fromArtboard(artboard, 'State Machine 1');
+    artboard.addController(controller!);
+    successAnimation = controller.findInput<bool>('Check') as rive.SMITrigger;
+    errorAnimation = controller.findInput<bool>('Error') as rive.SMITrigger;
+  }
+
+  void onConfettRiveInit(rive.Artboard artboard) {
+    final controller =
+        rive.StateMachineController.fromArtboard(artboard, 'State Machine 1');
+    artboard.addController(controller!);
+    confittAnimation =
+        controller.findInput<bool>('Trigger explosion') as rive.SMITrigger;
+  }
+
+  void login() {
+    setState(() {
+      isLoading = true;
+    });
+    bool isEmailValid = emilController.text.trim().isNotEmpty;
+    bool isPaswwordValid = passwordController.text.trim().isNotEmpty;
+    bool isValid = isEmailValid & isPaswwordValid;
+
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        isValid ? successAnimation.fire() : errorAnimation.fire();
+      },
+    );
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        setState(() {
+          isLoading = false;
+        });
+        if (isValid) confittAnimation.fire();
+      },
+    );
+    if (isValid) {
+      Future.delayed(const Duration(seconds: 4), () {
+        widget.onPressed();
+        emilController.clear();
+        passwordController.clear();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,6 +143,7 @@ class _SinginScreenState extends State<SinginScreen> {
                       ),
                       const SizedBox(height: 8),
                       TextField(
+                        controller: emilController,
                         decoration: authInputStyle(
                             iconName:
                                 'assets/samples/ui/rive_app/images/icon_email.png'),
@@ -96,6 +161,7 @@ class _SinginScreenState extends State<SinginScreen> {
                       ),
                       const SizedBox(height: 8),
                       TextField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: authInputStyle(
                             iconName:
@@ -121,7 +187,9 @@ class _SinginScreenState extends State<SinginScreen> {
                             bottomLeft: Radius.circular(20),
                             bottomRight: Radius.circular(20),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (!isLoading) login();
+                          },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -181,6 +249,34 @@ class _SinginScreenState extends State<SinginScreen> {
                   ),
                 ),
               ),
+              Positioned.fill(
+                  child: IgnorePointer(
+                ignoring: true,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    if (isLoading)
+                      SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: rive.RiveAnimation.asset(
+                            checkRiv,
+                            onInit: onCheckRiveInit,
+                          )),
+                    Positioned.fill(
+                        child: SizedBox(
+                            width: 500,
+                            height: 500,
+                            child: Transform.scale(
+                              scale: 3,
+                              child: rive.RiveAnimation.asset(
+                                confettiRiv,
+                                onInit: onConfettRiveInit,
+                              ),
+                            ))),
+                  ],
+                ),
+              )),
               Positioned(
                 bottom: 0,
                 left: 0,
