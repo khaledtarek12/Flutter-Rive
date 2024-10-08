@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rive_ui/home.dart';
 import 'package:rive_ui/screens/onboding_Screen/onboding_screen.dart';
 
 void main() {
@@ -28,15 +29,7 @@ class RiveScreens extends StatelessWidget {
         //   errorBorder: defaultInputBorder,
         // ),
       ),
-      home: const OnboardingScreen(),
+      home: const RiveAppHome(),
     );
   }
 }
-
-const defaultInputBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.all(Radius.circular(16)),
-  borderSide: BorderSide(
-    color: Color(0xFFDEE3F2),
-    width: 1,
-  ),
-);
